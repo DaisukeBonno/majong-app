@@ -1,0 +1,8 @@
+{
+  "name": "麻雀スコア",
+  "short_name": "麻雀",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#198754"
+}
