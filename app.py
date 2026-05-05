@@ -3,36 +3,40 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 def calculate_score(scores):
-    # プレイヤー番号付きでソート
-    ranked = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
+    base_points = [(s - 30000) / 1000 for s in scores]
 
-    # ウマ
-    uma = [30, 10, -10, -30]
+    # スコアとインデックス
+    sorted_scores = sorted([(s, i) for i, s in enumerate(scores)], reverse=True)
 
-    results = [0] * 4
+    ranks = [0]*4
+    for r, (_, i) in enumerate(sorted_scores):
+        ranks[i] = r
 
-    i = 0
-    while i < 4:
-        same = [ranked[i]]
-        j = i + 1
+    uma_table = [30, 10, -10, -30]
 
-        # 同点グループを作る
-        while j < 4 and ranked[i][1] == ranked[j][1]:
-            same.append(ranked[j])
-            j += 1
+    results = [0]*4
 
-        # ウマ平均
-        uma_sum = sum(uma[i:i+len(same)])
-        uma_avg = uma_sum / len(same)
+    # 同点処理
+    from collections import defaultdict
+    groups = defaultdict(list)
+    for i, s in enumerate(scores):
+        groups[s].append(i)
 
-        # 各プレイヤーに適用
-        for k, (idx, score) in enumerate(same):
-            base = (score - 30000) / 1000 * 10
-            results[idx] = int(base + uma_avg)
+    for score, players in groups.items():
+        if len(players) == 1:
+            i = players[0]
+            uma = uma_table[ranks[i]]
+            oka = 20 if ranks[i] == 0 else 0
+            results[i] = base_points[i] + uma + oka
+        else:
+            total_uma = sum(uma_table[ranks[i]] for i in players)
+            avg_uma = total_uma / len(players)
+            for i in players:
+                oka = 20 if ranks[i] == 0 else 0
+                results[i] = base_points[i] + avg_uma + oka
 
-        i = j
+    return [round(r) for r in results]
 
-    return results
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -41,17 +45,12 @@ def index():
     results = [0, 0, 0, 0]
 
     if request.method == "POST":
-        try:
-            names = request.form.getlist("names")
-            scores = list(map(int, request.form.getlist("scores")))
-            results = calculate_score(scores)
-        except:
-            results = ["エラー"] * 4
+        names = request.form.getlist("name")
+        scores = list(map(int, request.form.getlist("score")))
+        results = calculate_score(scores)
 
-    return render_template("index.html",
-                           names=names,
-                           scores=scores,
-                           results=results)
+    return render_template("index.html", names=names, scores=scores, results=results)
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>麻雀スコア計算</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>麻雀スコア</title>
+<link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
 
-<h2>麻雀スコア（10-30ウマ）</h2>
+<div class="container">
+    <h1>麻雀スコア（10-30ウマ）</h1>
 
-<form method="POST">
-    {% for i in range(4) %}
-        <div>
-            名前:
-            <input type="text" name="names" value="{{ names[i] }}">
-            点数:
-            <input type="number" name="scores" value="{{ scores[i] }}">
-            結果:
-            {{ results[i] }}
+    <form method="POST">
+
+        {% for i in range(4) %}
+        <div class="card">
+            <input type="text" name="name" value="{{names[i]}}" class="name">
+            <input type="number" name="score" value="{{scores[i]}}" class="score">
+            <div class="result">{{results[i]}}</div>
         </div>
-        <br>
-    {% endfor %}
+        {% endfor %}
 
-    <button type="submit">計算</button>
-</form>
+        <button type="submit">計算</button>
+    </form>
+</div>
 
 </body>
 </html>
