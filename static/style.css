@@ -1,54 +1,75 @@
+<style>
 body {
     margin: 0;
-    font-family: sans-serif;
-    background: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont;
+    background: #0b2e22;
     color: white;
 }
 
-.container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.card {
-    background: #1e293b;
-    border-radius: 15px;
+/* ヘッダー */
+.header {
+    position: sticky;
+    top: 0;
+    background: #0f3d2e;
     padding: 15px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.name {
-    width: 30%;
-    font-size: 16px;
-}
-
-.score {
-    width: 30%;
-    font-size: 16px;
-}
-
-.result {
-    width: 30%;
-    text-align: right;
+    text-align: center;
     font-size: 18px;
     font-weight: bold;
 }
 
-button {
+/* カード */
+.card {
+    background: #145c43;
+    margin: 10px;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* 入力 */
+input {
     width: 100%;
-    padding: 15px;
-    font-size: 18px;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
     border: none;
-    border-radius: 10px;
-    background: #22c55e;
+    font-size: 16px;
+}
+
+/* 結果 */
+.result {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 16px;
+}
+
+.plus { color: #4cd964; }
+.minus { color: #ff453a; }
+
+/* 累計 */
+.total {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* ボタン */
+button {
+    width: calc(100% - 20px);
+    margin: 10px;
+    padding: 15px;
+    background: #34c759;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
     color: white;
 }
+
+/* 履歴 */
+.history {
+    background: #0f3d2e;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+</style>

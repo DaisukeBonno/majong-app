@@ -45,7 +45,7 @@ def index():
     history = session["history"]
 
     names = ["プレイヤー1", "プレイヤー2", "プレイヤー3", "プレイヤー4"]
-    scores = [25000, 25000, 25000, 25000]
+    scores = [25000]*4
     results = [0]*4
 
     if request.method == "POST":
@@ -54,11 +54,9 @@ def index():
 
         results = calculate_score(scores)
 
-        # 履歴に追加
         history.append(results)
         session["history"] = history
 
-    # 累計
     totals = [0]*4
     for game in history:
         for i in range(4):
@@ -77,7 +75,7 @@ def index():
 @app.route("/reset")
 def reset():
     session.clear()
-    return "リセットしました"
+    return "<h2>リセットしました</h2><a href='/'>戻る</a>"
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
