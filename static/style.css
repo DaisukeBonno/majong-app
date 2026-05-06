@@ -1,32 +1,68 @@
-<style>
+/* ===== 全体 ===== */
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont;
-    background: #0b2e22;
-    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+    background: #0a0a0a;
+    color: #fff;
 }
 
-/* ヘッダー */
+/* ===== ヘッダー ===== */
 .header {
-    position: sticky;
-    top: 0;
-    background: #0f3d2e;
-    padding: 15px;
+    background: linear-gradient(90deg, #0f3d2e, #000);
+    padding: 16px;
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
+    border-bottom: 2px solid gold;
+    letter-spacing: 1px;
 }
 
-/* カード */
+/* ===== コンテナ ===== */
+.container {
+    padding-bottom: 20px;
+}
+
+/* ===== プレイヤーカード ===== */
 .card {
-    background: #145c43;
-    margin: 10px;
-    padding: 12px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    margin: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(145deg, #1a1a1a, #0f3d2e);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.6);
+    position: relative;
+    transition: transform 0.2s ease;
 }
 
-/* 入力 */
+/* タップ感 */
+.card:active {
+    transform: scale(0.98);
+}
+
+/* ===== 順位表示 ===== */
+.rank {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    font-size: 20px;
+    font-weight: bold;
+    color: gold;
+}
+
+/* ===== 名前入力 ===== */
+.name input {
+    font-size: 17px;
+    font-weight: bold;
+    background: transparent;
+    color: white;
+    border: none;
+    border-bottom: 1px solid #555;
+}
+
+/* ===== 点数入力 ===== */
+.score-input {
+    margin-top: 6px;
+}
+
 input {
     width: 100%;
     padding: 10px;
@@ -34,42 +70,85 @@ input {
     border-radius: 8px;
     border: none;
     font-size: 16px;
-}
-
-/* 結果 */
-.result {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-    font-size: 16px;
-}
-
-.plus { color: #4cd964; }
-.minus { color: #ff453a; }
-
-/* 累計 */
-.total {
-    font-size: 20px;
-    font-weight: bold;
-}
-
-/* ボタン */
-button {
-    width: calc(100% - 20px);
-    margin: 10px;
-    padding: 15px;
-    background: #34c759;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
+    background: #222;
     color: white;
 }
 
-/* 履歴 */
-.history {
-    background: #0f3d2e;
-    margin: 10px;
-    padding: 10px;
-    border-radius: 10px;
+/* ===== スコア表示 ===== */
+.score {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 8px;
 }
-</style>
+
+/* プラス・マイナス色 */
+.plus {
+    color: #00ff99;
+}
+
+.minus {
+    color: #ff4444;
+}
+
+/* ===== 累計 ===== */
+.total {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 6px;
+    opacity: 0.9;
+}
+
+/* ===== 1位強調 ===== */
+.first {
+    border: 2px solid gold;
+    box-shadow: 0 0 10px gold;
+}
+
+/* ===== ボタン ===== */
+button {
+    width: calc(100% - 24px);
+    margin: 12px;
+    padding: 16px;
+    background: linear-gradient(90deg, gold, #d4af37);
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    letter-spacing: 1px;
+    transition: 0.2s;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* ===== 履歴 ===== */
+.history {
+    margin: 12px;
+    padding: 12px;
+    background: #111;
+    border-radius: 12px;
+}
+
+.history h3 {
+    margin-top: 0;
+    color: gold;
+}
+
+/* ===== スクロール対応 ===== */
+body {
+    overflow-x: hidden;
+}
+
+/* ===== モバイル最適化 ===== */
+@media (max-width: 600px) {
+    .score {
+        font-size: 28px;
+    }
+
+    .header {
+        font-size: 18px;
+    }
+}
