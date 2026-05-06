@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>麻雀スコア</title>
+<title>麻雀スコア管理</title>
 
 <link rel="manifest" href="/static/manifest.json">
+<meta name="theme-color" content="#0f3d2e">
 
 <style>
+/* ===== 全体 ===== */
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont;
@@ -26,50 +28,44 @@ body {
     border-bottom: 2px solid gold;
 }
 
-/* プレイヤーカード */
+/* カード */
 .card {
     margin: 10px;
-    padding: 15px;
+    padding: 14px;
     border-radius: 12px;
     background: linear-gradient(145deg, #1a1a1a, #0f3d2e);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.7);
     position: relative;
 }
 
-/* 順位表示 */
+/* 順位 */
 .rank {
     position: absolute;
     top: 10px;
     right: 15px;
     font-size: 20px;
-    font-weight: bold;
     color: gold;
-}
-
-/* 名前 */
-.name {
-    font-size: 18px;
-    margin-bottom: 5px;
 }
 
 /* 入力 */
 input {
     width: 100%;
     padding: 10px;
-    margin: 5px 0;
+    margin-top: 5px;
     border-radius: 8px;
     border: none;
-    font-size: 16px;
+    background: #222;
+    color: white;
 }
 
 /* スコア */
 .score {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 32px;
     text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
-/* プラスマイナス */
 .plus { color: #00ff88; }
 .minus { color: #ff4444; }
 
@@ -111,27 +107,31 @@ button {
 
 <form method="POST">
 
+{% set sorted_totals = totals|sort(reverse=True) %}
+
 {% for i in range(4) %}
 <div class="card">
 
+    <!-- 順位表示 -->
     <div class="rank">
-        {% if totals[i] == totals|max %}
+        {% if totals[i] == sorted_totals[0] %}
             🥇
-        {% elif totals[i] == totals|sort(reverse=True)[1] %}
+        {% elif totals[i] == sorted_totals[1] %}
             🥈
-        {% elif totals[i] == totals|sort(reverse=True)[2] %}
+        {% elif totals[i] == sorted_totals[2] %}
             🥉
         {% else %}
             4位
         {% endif %}
     </div>
 
-    <div class="name">
-        <input type="text" name="name" value="{{ names[i] }}">
-    </div>
+    <!-- 名前 -->
+    <input type="text" name="name" value="{{ names[i] }}">
 
+    <!-- 点数 -->
     <input type="number" name="score" value="{{ scores[i] }}">
 
+    <!-- 今回 -->
     <div class="score 
         {% if results[i] > 0 %}plus
         {% elif results[i] < 0 %}minus
@@ -140,6 +140,7 @@ button {
         {{ results[i] }}
     </div>
 
+    <!-- 累計 -->
     <div class="total">
         累計：{{ totals[i] }}
     </div>
@@ -156,6 +157,7 @@ button {
 {% for game in history %}
 <div>第{{ loop.index }}回戦：{{ game }}</div>
 {% endfor %}
+<a href="/reset" style="color:white;">リセット</a>
 </div>
 
 <script>
